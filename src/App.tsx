@@ -208,9 +208,24 @@ function MobileMenu({
 function App() {
   const activeSection = useActiveSection();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const spotlightRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = spotlightRef.current;
+    if (!el) return;
+    function handleMouseMove(e: MouseEvent) {
+      el!.style.background = `radial-gradient(560px circle at ${e.clientX}px ${e.clientY}px, rgba(100,255,218,0.15), rgba(100,255,218,0))`;
+    }
+    document.addEventListener("mousemove", handleMouseMove);
+    return () => document.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   return (
     <div className="bg-navy text-slate">
+      <div
+        ref={spotlightRef}
+        className="pointer-events-none fixed inset-0 z-30"
+      />
       {/* Mobile hamburger — fixed top-right, only on small screens */}
       <button
         onClick={() => setMobileMenuOpen(true)}
