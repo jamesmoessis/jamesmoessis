@@ -44,3 +44,24 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Tab-switch content reveal */
+@keyframes tab-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tab-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.tab-reveal.tab-reveal-active {
+  animation: tab-slide-in 0.4s ease forwards;
+}
