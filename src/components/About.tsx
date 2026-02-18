@@ -2,13 +2,13 @@ const TECH = [
   "Go",
   "Java / Kotlin",
   "Python",
-  "TypeScript",
+  "Distributed Systems",
   "Kubernetes",
-  "AWS",
+  "Performance Optimisation",
   "OpenTelemetry",
   "Spring Framework",
   "PostgreSQL",
-  "Distributed Systems",
+  "Public Speaking",
 ];
 
 function About() {
