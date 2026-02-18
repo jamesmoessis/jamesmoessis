@@ -13,12 +13,12 @@ function Experience() {
         Experience
       </h3>
 
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="flex flex-col gap-0">
         {/* Tab list */}
         <div
           role="tablist"
           aria-label="Experience"
-          className="flex overflow-x-auto border-b border-navy-lighter sm:flex-col sm:border-b-0 sm:border-l"
+          className="flex overflow-x-auto border-b border-navy-lighter [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         >
           {experience.map((entry, i) => {
             const isActive = i === activeIdx;
@@ -28,9 +28,9 @@ function Experience() {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setActiveIdx(i)}
-                className={`whitespace-nowrap px-4 py-3 text-left font-mono text-sm transition-colors ${
+                className={`whitespace-nowrap px-5 py-3 font-mono text-sm transition-colors ${
                   isActive
-                    ? "border-b-2 border-teal text-teal sm:border-b-0 sm:border-l-2 sm:-ml-px"
+                    ? "border-b-2 border-teal text-teal -mb-px"
                     : "text-slate hover:text-teal hover:bg-navy-light"
                 }`}
               >
@@ -41,7 +41,7 @@ function Experience() {
         </div>
 
         {/* Content panel */}
-        <div className="min-h-[320px] flex-1 py-2 sm:pl-4" role="tabpanel">
+        <div className="flex-1 pt-6 pb-2" role="tabpanel">
           {/* Role titles with dates */}
           <div className="space-y-1">
             {active.roles.map((role, i) => (
@@ -71,7 +71,7 @@ function Experience() {
           <ul className="mt-6 space-y-3">
             {allBullets.map((bullet, j) => (
               <li key={j} className="flex gap-3 text-sm leading-relaxed text-slate">
-                <span className="mt-1 shrink-0 text-teal">▹</span>
+                <span className="shrink-0 text-teal leading-relaxed">▹</span>
                 <span>{bullet}</span>
               </li>
             ))}
