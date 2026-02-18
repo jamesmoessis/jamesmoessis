@@ -14,6 +14,8 @@ bd sync               # Sync with git
 
 ## Landing the Plane (Session Completion)
 
+You should ask the prompter, should I land the plane? At which point the human will review the agent's work and advise whether revisions should be made, or whether the below steps (landing the plane) can be completed, and the session can be closed out. 
+
 **When ending a work session**, you MUST complete ALL steps below. Work is NOT complete until `git push` succeeds.
 
 **MANDATORY WORKFLOW:**
