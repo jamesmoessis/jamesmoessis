@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, type ReactNode } from "react";
+import { useState, useEffect, useRef, useCallback, type ReactNode } from "react";
 import About from "./components/About";
 import Experience from "./components/Experience";
 import Hero from "./components/Hero";
@@ -205,25 +205,71 @@ function MobileMenu({
   );
 }
 
+function useMouseGlow() {
+  const primaryRef = useRef<HTMLDivElement>(null);
+  const trailRef = useRef<HTMLDivElement>(null);
+
+  const mouse = useRef({ x: -1000, y: -1000 });
+  const primary = useRef({ x: -1000, y: -1000 });
+  const trail = useRef({ x: -1000, y: -1000 });
+  const rafId = useRef(0);
+
+  const tick = useCallback(() => {
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+    const mx = mouse.current.x;
+    const my = mouse.current.y;
+
+    primary.current.x = lerp(primary.current.x, mx, 0.15);
+    primary.current.y = lerp(primary.current.y, my, 0.15);
+    trail.current.x = lerp(trail.current.x, mx, 0.06);
+    trail.current.y = lerp(trail.current.y, my, 0.06);
+
+    const px = primary.current.x;
+    const py = primary.current.y;
+    const tx = trail.current.x;
+    const ty = trail.current.y;
+
+    if (primaryRef.current) {
+      primaryRef.current.style.background =
+        `radial-gradient(700px circle at ${px}px ${py}px, rgba(100,255,218,0.07), transparent)`;
+    }
+    if (trailRef.current) {
+      trailRef.current.style.background =
+        `radial-gradient(1000px circle at ${tx}px ${ty}px, rgba(100,255,218,0.04), transparent)`;
+    }
+
+    rafId.current = requestAnimationFrame(tick);
+  }, []);
+
+  useEffect(() => {
+    function handleMouseMove(e: MouseEvent) {
+      mouse.current.x = e.clientX;
+      mouse.current.y = e.clientY;
+    }
+    document.addEventListener("mousemove", handleMouseMove);
+    rafId.current = requestAnimationFrame(tick);
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(rafId.current);
+    };
+  }, [tick]);
+
+  return { primaryRef, trailRef };
+}
+
 function App() {
   const activeSection = useActiveSection();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const spotlightRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = spotlightRef.current;
-    if (!el) return;
-    function handleMouseMove(e: MouseEvent) {
-      el!.style.background = `radial-gradient(560px circle at ${e.clientX}px ${e.clientY}px, rgba(100,255,218,0.15), rgba(100,255,218,0))`;
-    }
-    document.addEventListener("mousemove", handleMouseMove);
-    return () => document.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  const { primaryRef, trailRef } = useMouseGlow();
 
   return (
     <div className="bg-navy text-slate">
       <div
-        ref={spotlightRef}
+        ref={trailRef}
+        className="pointer-events-none fixed inset-0 z-30"
+      />
+      <div
+        ref={primaryRef}
         className="pointer-events-none fixed inset-0 z-30"
       />
       {/* Mobile hamburger — fixed top-right, only on small screens */}
