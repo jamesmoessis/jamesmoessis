@@ -57,9 +57,17 @@ function About() {
             OpenTelemetry
           </a>{" "}
           and Spring, and I've spoken at conferences including{" "}
-          <span className="text-slate-lightest">KubeCon London</span>,{" "}
-          <span className="text-slate-lightest">Splunk Conf</span> in Las Vegas,
-          and a keynote at the Sydney ICC.
+          <span className="text-slate-lightest">Splunk Conf in Las Vegas</span>, a
+          keynote in the Sydney International Convention Centre, and a featured interviewee at{" "}
+          <a
+            href="https://youtu.be/QzStkLbA7Qk?si=5ZXUeBMxg67e7hUh&t=461"
+            target="_blank"
+            rel="noreferrer"
+            className="text-slate-lightest underline underline-offset-2 decoration-slate hover:text-teal hover:decoration-teal transition-colors"
+          >
+            KubeCon London '25
+          </a>
+          .
         </p>
 
         <p className="mb-6 text-slate">
