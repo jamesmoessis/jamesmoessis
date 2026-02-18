@@ -1,6 +1,6 @@
 # Welcome to Jmoe's Profile
 
-I'm a software engineer working in the Observability and OpenTelemetry space.
+hey! Welcome to my GitHub. I'm a software engineer working in the Observability and OpenTelemetry space. Feel free to connect with me on LinkedIn or send me an email for a chat (see sidebar).
 
 For a repository that I led the development on, and I'm very proud of, check out the [atlassian-sampling-processor](https://github.com/atlassian-labs/atlassian-sampling-processor), a tail-based distributed tracing sampler which focuses on high throughput, memory optimisation, and auto-scaleability. 
 
