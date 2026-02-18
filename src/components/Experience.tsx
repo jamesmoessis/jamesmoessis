@@ -23,9 +23,14 @@ function Experience() {
   useEffect(() => {
     syncHeight();
     setAnimating(true);
-    const id = setTimeout(() => setAnimating(false), 400);
+    const lastDelay = Math.max(
+      (active.roles.length - 1) * 60,
+      active.roles.length * 60,
+      100 + (allBullets.length - 1) * 60
+    );
+    const id = setTimeout(() => setAnimating(false), lastDelay + 400);
     return () => clearTimeout(id);
-  }, [activeIdx, syncHeight]);
+  }, [activeIdx, syncHeight, active.roles.length, allBullets.length]);
 
   useEffect(() => {
     if (!innerRef.current) return;
