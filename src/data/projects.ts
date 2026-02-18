@@ -11,7 +11,7 @@ const projects: Project[] = [
     title: "Distributed Tracing Tail Sampling Algorithm",
     description:
       "Led the development and public release of a world-leading distributed tracing sampling algorithm at Atlassian. Optimised performance for a system handling millions of datapoints per second across thousands of microservices.",
-    tech: ["Go", "OpenTelemetry"],
+    tech: ["Go", "OpenTelemetry", "Performance Optimisation"],
     githubUrl: "https://github.com/atlassian-labs/atlassian-sampling-processor/tree/main",
   },
   {

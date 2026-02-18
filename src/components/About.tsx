@@ -1,3 +1,5 @@
+import { useInView } from "../hooks/useInView";
+
 const TECH = [
   "Go",
   "Java / Kotlin",
@@ -12,8 +14,13 @@ const TECH = [
 ];
 
 function About() {
+  const { ref, inView } = useInView<HTMLElement>();
   return (
-    <section id="about" className="mb-24 scroll-mt-24">
+    <section
+      id="about"
+      ref={ref}
+      className={`mb-24 scroll-mt-24 reveal ${inView ? "visible" : ""}`}
+    >
       <h3 className="mb-8 text-sm font-bold uppercase tracking-widest text-slate-lightest">
         About
       </h3>
@@ -77,8 +84,12 @@ function About() {
         </p>
 
         <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2">
-          {TECH.map((t) => (
-            <li key={t} className="flex items-center gap-2 text-sm text-slate">
+          {TECH.map((t, i) => (
+            <li
+              key={t}
+              className={`flex items-center gap-2 text-sm text-slate reveal ${inView ? "visible" : ""}`}
+              style={{ transitionDelay: inView ? `${i * 60}ms` : "0ms" }}
+            >
               <span className="text-teal">▹</span>
               {t}
             </li>

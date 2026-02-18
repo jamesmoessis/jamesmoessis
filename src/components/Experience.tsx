@@ -1,14 +1,19 @@
 import { useState } from "react";
 import experience from "../data/experience";
+import { useInView } from "../hooks/useInView";
 
 function Experience() {
   const [activeIdx, setActiveIdx] = useState(0);
   const active = experience[activeIdx];
-
   const allBullets = active.roles.flatMap((r) => r.bullets);
+  const { ref, inView } = useInView<HTMLElement>();
 
   return (
-    <section id="experience" className="mb-24 scroll-mt-24">
+    <section
+      id="experience"
+      ref={ref}
+      className={`mb-24 scroll-mt-24 reveal ${inView ? "visible" : ""}`}
+    >
       <h3 className="mb-8 text-sm font-bold uppercase tracking-widest text-slate-lightest">
         Experience
       </h3>
@@ -70,7 +75,11 @@ function Experience() {
           {/* Combined bullets */}
           <ul className="mt-6 space-y-3">
             {allBullets.map((bullet, j) => (
-              <li key={j} className="flex gap-3 text-sm leading-relaxed text-slate">
+              <li
+                key={j}
+                className={`flex gap-3 text-sm leading-relaxed text-slate reveal ${inView ? "visible" : ""}`}
+                style={{ transitionDelay: inView ? `${100 + j * 60}ms` : "0ms" }}
+              >
                 <span className="shrink-0 text-teal leading-relaxed">▹</span>
                 <span>{bullet}</span>
               </li>

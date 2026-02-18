@@ -1,4 +1,5 @@
 import projects from "../data/projects";
+import { useInView } from "../hooks/useInView";
 
 function ExternalIcon() {
   return (
@@ -37,8 +38,13 @@ function GitHubIcon() {
 }
 
 function Projects() {
+  const { ref, inView } = useInView<HTMLElement>();
   return (
-    <section id="projects" className="mb-24 scroll-mt-24">
+    <section
+      id="projects"
+      ref={ref}
+      className={`mb-24 scroll-mt-24 reveal ${inView ? "visible" : ""}`}
+    >
       <h3 className="mb-8 text-sm font-bold uppercase tracking-widest text-slate-lightest">
         Projects
       </h3>
@@ -47,7 +53,8 @@ function Projects() {
         {projects.map((project, i) => (
           <div
             key={i}
-            className="group relative rounded-lg p-5 transition-all hover:bg-navy-light/50 hover:shadow-lg"
+            className={`group relative rounded-lg p-5 transition-all hover:bg-navy-light/50 hover:shadow-lg reveal ${inView ? "visible" : ""}`}
+            style={{ transitionDelay: inView ? `${i * 100}ms` : "0ms" }}
           >
             <p className="mb-2 font-mono text-sm text-teal">
               Featured Project

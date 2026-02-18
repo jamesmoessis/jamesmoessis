@@ -5,8 +5,15 @@ import Hero from "./components/Hero";
 import Nav from "./components/Nav";
 import Projects from "./components/Projects";
 import { useActiveSection } from "./hooks/useActiveSection";
+import type { SectionId } from "./hooks/useActiveSection";
 
 const EMAIL = "james.moessis1@gmail.com";
+
+const NAV_LINKS: { id: SectionId; label: string }[] = [
+  { id: "about", label: "About" },
+  { id: "experience", label: "Experience" },
+  { id: "projects", label: "Projects" },
+];
 
 function EmailPopover() {
   const [open, setOpen] = useState(false);
@@ -61,49 +68,138 @@ function EmailPopover() {
   );
 }
 
+function SocialLinks({ className = "" }: { className?: string }) {
+  return (
+    <div className={`flex items-center gap-5 text-slate ${className}`}>
+      <a
+        href="https://github.com/jamesmoessis"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="GitHub"
+        className="transition-colors hover:text-teal"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+        </svg>
+      </a>
+      <a
+        href="https://linkedin.com/in/james-moessis"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="LinkedIn"
+        className="transition-colors hover:text-teal"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+          <rect x="2" y="9" width="4" height="12" />
+          <circle cx="4" cy="4" r="2" />
+        </svg>
+      </a>
+      <EmailPopover />
+    </div>
+  );
+}
+
+function MobileMenu({
+  open,
+  onClose,
+  activeSection,
+}: {
+  open: boolean;
+  onClose: () => void;
+  activeSection: SectionId;
+}) {
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
+  if (!open) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex flex-col bg-navy-light lg:hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Navigation menu"
+    >
+      <div className="flex items-center justify-between px-6 py-5 border-b border-navy-lighter">
+        <span className="font-mono text-sm text-teal">jamesmoessis</span>
+        <button
+          onClick={onClose}
+          aria-label="Close menu"
+          className="text-slate hover:text-teal transition-colors cursor-pointer p-1"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <nav className="flex flex-1 flex-col items-center justify-center gap-8">
+        {NAV_LINKS.map(({ id, label }) => (
+          <a
+            key={id}
+            href={`#${id}`}
+            onClick={onClose}
+            className={`text-2xl font-bold uppercase tracking-widest transition-colors ${
+              activeSection === id ? "text-teal" : "text-slate-lightest hover:text-teal"
+            }`}
+          >
+            {label}
+          </a>
+        ))}
+      </nav>
+
+      <div className="flex justify-center pb-12">
+        <SocialLinks />
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const activeSection = useActiveSection();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="bg-navy text-slate">
+      {/* Mobile hamburger — fixed top-right, only on small screens */}
+      <button
+        onClick={() => setMobileMenuOpen(true)}
+        aria-label="Open menu"
+        className="fixed top-5 right-6 z-40 flex flex-col gap-1.5 cursor-pointer lg:hidden"
+      >
+        <span className="block h-0.5 w-6 bg-teal" />
+        <span className="block h-0.5 w-6 bg-teal" />
+        <span className="block h-0.5 w-4 bg-teal" />
+      </button>
+
+      <MobileMenu
+        open={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        activeSection={activeSection}
+      />
+
       <div className="mx-auto min-h-screen max-w-screen-xl px-6 md:px-12 lg:flex lg:gap-4 lg:px-24 lg:py-0">
         {/* Left sidebar — sticky on large screens */}
-        <header className="flex flex-col gap-6 py-12 lg:sticky lg:top-0 lg:h-screen lg:w-1/2 lg:justify-between lg:py-24">
+        <header className="flex flex-col gap-6 pt-20 pb-12 lg:sticky lg:top-0 lg:h-screen lg:w-1/2 lg:justify-between lg:pt-24 lg:pb-24">
           <div>
             <Hero />
-            <div className="mt-12">
+            {/* Social links — mobile only, shown below hero text */}
+            <SocialLinks className="mt-6 flex lg:hidden" />
+            <div className="mt-8 lg:mt-12">
               <Nav activeSection={activeSection} />
             </div>
           </div>
 
-          {/* Social links */}
-          <div className="hidden lg:flex items-center gap-5 text-slate">
-            <a
-              href="https://github.com/jamesmoessis"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="GitHub"
-              className="transition-colors hover:text-teal"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-              </svg>
-            </a>
-            <a
-              href="https://linkedin.com/in/james-moessis"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn"
-              className="transition-colors hover:text-teal"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                <rect x="2" y="9" width="4" height="12" />
-                <circle cx="4" cy="4" r="2" />
-              </svg>
-            </a>
-            <EmailPopover />
-          </div>
+          {/* Social links — desktop sidebar only */}
+          <SocialLinks className="hidden lg:flex" />
         </header>
 
         {/* Right content — scrolls */}
@@ -111,6 +207,19 @@ function App() {
           <About />
           <Experience />
           <Projects />
+          <footer className="pb-12 text-center text-xs text-slate lg:pb-0">
+            <p>
+              Designed &amp; Built by{" "}
+              <a
+                href="https://github.com/jamesmoessis"
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-slate-light hover:text-teal transition-colors"
+              >
+                James Moessis
+              </a>
+            </p>
+          </footer>
         </main>
       </div>
     </div>
