@@ -88,7 +88,7 @@ function Experience() {
               {active.roles.map((role, i) => (
                 <div
                   key={i}
-                  className={`flex flex-wrap items-baseline gap-x-3 ${animating ? "tab-reveal tab-reveal-active" : ""}`}
+                  className={`flex flex-wrap items-baseline justify-between gap-x-3 ${animating ? "tab-reveal tab-reveal-active" : ""}`}
                   style={{ animationDelay: `${i * 60}ms` }}
                 >
                   <h4 className="text-lg text-slate-lightest">
