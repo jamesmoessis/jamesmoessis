@@ -104,6 +104,14 @@ function MagneticIcon({ children }: { children: ReactNode }) {
   );
 }
 
+function CvIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
+      <text x="12" y="17" textAnchor="middle" fill="currentColor" fontSize="14" fontWeight="700" fontFamily="inherit" letterSpacing="0.5">CV</text>
+    </svg>
+  );
+}
+
 function SocialLinks({ className = "" }: { className?: string }) {
   return (
     <div className={`flex items-center gap-5 text-slate ${className}`}>
@@ -137,6 +145,17 @@ function SocialLinks({ className = "" }: { className?: string }) {
       </MagneticIcon>
       <MagneticIcon>
         <EmailPopover />
+      </MagneticIcon>
+      <MagneticIcon>
+        <a
+          href="/resume.pdf"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Resume"
+          className="transition-colors hover:text-teal"
+        >
+          <CvIcon />
+        </a>
       </MagneticIcon>
     </div>
   );
