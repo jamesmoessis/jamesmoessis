@@ -1,19 +1,16 @@
-# jamesmoessis — Personal Website
+# jamesmoessis.com
 
 Personal portfolio site built. [Beads](https://github.com/steveyegge/beads) used experimentally to plan work and to give agents long term memory.
 
 ## Prerequisites
 
-- [nvm](https://github.com/nvm-sh/nvm) installed (recommended)
-- [Node.js](https://nodejs.org/) v24.x (project currently built with v24.13.1)
-- npm (bundled with Node v24; project currently built with npm v11.8.0)
+- [Node.js](https://nodejs.org/) v24.x and NPM
 - [AWS CLI v2](https://docs.aws.amazon.com/cli/) configured with credentials for the target AWS account
 - [Terraform](https://developer.hashicorp.com/terraform/downloads) v1.14.0 or later
 
 ## Getting Started
 
 ```bash
-# Install dependencies
 npm install
 
 # Start the dev server
