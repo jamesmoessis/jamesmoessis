@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build:wasm": "cd game && GOOS=js GOARCH=wasm go build -o ../public/game.wasm .",
+    "build": "npm run build:wasm && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -13,6 +14,7 @@
     "@tailwindcss/vite": "^4.1.18",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-router": "^7.13.0",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
