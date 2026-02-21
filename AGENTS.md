@@ -40,4 +40,5 @@ You should ask the prompter, should I land the plane? At which point the human w
 - NEVER stop before pushing - that leaves work stranded locally
 - NEVER say "ready to push when you are" - YOU must push
 - If push fails, resolve and retry until it succeeds
+- After creating beads with `bd create`, always run `bd sync` then commit `.beads/issues.jsonl` — the Dolt database is local-only; the JSONL is what git (and future agents) see
 
